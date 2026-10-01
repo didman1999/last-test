@@ -1,0 +1,18 @@
+﻿# نظام التشغيل
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# محرر الكود
+.vscode/
+.idea/
+*.suo
+*.user
+
+# ملفات مؤقتة
+*.log
+*.tmp
+*.bak
+
+# مجلدات Node (لو اتضافت مستقبلاً)
+node_modules/

@@ -1,0 +1,434 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة التحكم - حجز رقم شركات المقاولات</title>
+  <meta name="description" content="لوحة تحكم إدارية لإدارة حجوزات شركات المقاولات وأوقات العمل" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <!-- ===== شاشة تسجيل الدخول ===== -->
+  <div class="login-screen" id="login-screen">
+    <div class="login-bg"></div>
+    <div class="login-box">
+      <div class="login-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" fill="none">
+          <path d="M10 28C10 17 19 9 30 9C41 9 50 17 50 28L50 33L10 33Z" stroke="#6366f1" stroke-width="2.5" fill="rgba(99,102,241,0.1)" stroke-linejoin="round"/>
+          <path d="M6 33L54 33L54 38Q54 42 50 42L10 42Q6 42 6 38Z" stroke="#6366f1" stroke-width="2.5" fill="rgba(99,102,241,0.1)" stroke-linejoin="round"/>
+          <rect x="20" y="39" width="20" height="14" rx="3" fill="#6366f1"/>
+          <text x="30" y="50" text-anchor="middle" font-size="9" font-weight="bold" fill="white" font-family="Cairo,sans-serif">#</text>
+        </svg>
+      </div>
+      <h1 class="login-title">لوحة التحكم</h1>
+      <p class="login-sub">حجز رقم شركات المقاولات</p>
+      <div class="login-form">
+        <div class="login-field">
+          <label for="admin-pass">كلمة المرور</label>
+          <div class="pass-wrapper">
+            <input type="password" id="admin-pass" placeholder="أدخل كلمة المرور" autocomplete="current-password" />
+            <button type="button" class="toggle-pass" id="toggle-pass" aria-label="إظهار/إخفاء كلمة المرور">
+              <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <p class="login-error" id="login-error">كلمة المرور غير صحيحة!</p>
+        <button class="login-btn" id="login-btn">دخول</button>
+        <p class="login-hint">كلمة المرور الافتراضية: <strong>admin123</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== لوحة التحكم الرئيسية ===== -->
+  <div class="dashboard" id="dashboard" style="display:none">
+
+    <!-- الشريط الجانبي -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
+            <path d="M6 19C6 11 12 6 20 6C28 6 34 11 34 19L34 22L6 22Z" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.15)"/>
+            <path d="M4 22L36 22L36 26Q36 29 33 29L7 29Q4 29 4 26Z" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.15)"/>
+            <rect x="13" y="27" width="14" height="9" rx="2" fill="white"/>
+            <text x="20" y="35" text-anchor="middle" font-size="6" font-weight="bold" fill="#6366f1" font-family="Cairo,sans-serif">#</text>
+          </svg>
+        </div>
+        <div>
+          <div class="sidebar-logo-text">لوحة التحكم</div>
+          <div class="sidebar-logo-sub">المقاولات</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="overview" id="nav-overview">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+          </svg>
+          <span>نظرة عامة</span>
+        </a>
+        <a href="#" class="nav-item" data-section="bookings" id="nav-bookings">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          <span>الحجوزات</span>
+          <span class="nav-badge" id="nav-badge">0</span>
+        </a>
+        <a href="#" class="nav-item" data-section="schedule" id="nav-schedule">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>أوقات العمل</span>
+        </a>
+        <a href="#" class="nav-item" data-section="settings" id="nav-settings">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          <span>الإعدادات</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="logout-btn" id="logout-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span>تسجيل الخروج</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-area">
+
+      <!-- الهيدر -->
+      <header class="top-bar">
+        <div class="top-bar-right">
+          <button class="menu-toggle" id="menu-toggle" aria-label="قائمة">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+          <div>
+            <h2 class="page-title" id="page-title">نظرة عامة</h2>
+            <p class="page-time" id="page-time"></p>
+          </div>
+        </div>
+        <div class="top-bar-left">
+          <div class="status-pill" id="top-status-pill">
+            <span class="status-dot"></span>
+            <span class="status-label" id="top-status-label">جاري التحقق...</span>
+          </div>
+          <a href="index.html" target="_blank" class="preview-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            معاينة الموقع
+          </a>
+        </div>
+      </header>
+
+      <!-- المحتوى -->
+      <div class="content-area">
+
+        <!-- ===== قسم نظرة عامة ===== -->
+        <section class="section active" id="section-overview">
+          <div class="stats-grid">
+            <div class="stat-card stat-blue">
+              <div class="stat-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value" id="stat-total">0</div>
+                <div class="stat-label">إجمالي الحجوزات</div>
+              </div>
+            </div>
+            <div class="stat-card stat-green">
+              <div class="stat-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value" id="stat-today">0</div>
+                <div class="stat-label">حجوزات اليوم</div>
+              </div>
+            </div>
+            <div class="stat-card stat-purple">
+              <div class="stat-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value" id="stat-status-card">--</div>
+                <div class="stat-label">حالة الخدمة</div>
+              </div>
+            </div>
+            <div class="stat-card stat-orange">
+              <div class="stat-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="1" x2="12" y2="23"/>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value" id="stat-last">--</div>
+                <div class="stat-label">آخر حجز</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- أحدث الحجوزات -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title">أحدث الحجوزات</h3>
+              <button class="btn-sm" onclick="switchSection('bookings')">عرض الكل</button>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table" id="recent-table">
+                <thead>
+                  <tr>
+                    <th>رقم الحجز</th>
+                    <th>الاسم</th>
+                    <th>رقم الهاتف</th>
+                    <th>الرقم القومي</th>
+                    <th>التاريخ والوقت</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-tbody">
+                  <tr class="empty-row"><td colspan="5">لا توجد حجوزات بعد</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== قسم الحجوزات ===== -->
+        <section class="section" id="section-bookings">
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title">جميع الحجوزات</h3>
+              <div class="panel-actions">
+                <div class="search-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
+                  <input type="text" id="search-input" placeholder="بحث بالاسم أو الهاتف..." />
+                </div>
+                <button class="btn-danger" id="clear-all-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                    <path d="M10 11v6"/><path d="M14 11v6"/>
+                  </svg>
+                  حذف الكل
+                </button>
+                <button class="btn-export" id="export-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  تصدير CSV
+                </button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table" id="all-table">
+                <thead>
+                  <tr>
+                    <th>رقم الحجز</th>
+                    <th>الاسم</th>
+                    <th>رقم الهاتف</th>
+                    <th>الرقم القومي</th>
+                    <th>التاريخ والوقت</th>
+                    <th>إجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="all-tbody">
+                  <tr class="empty-row"><td colspan="6">لا توجد حجوزات بعد</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-footer">
+              <span id="total-count">إجمالي: 0 حجز</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== قسم أوقات العمل ===== -->
+        <section class="section" id="section-schedule">
+          <div class="schedule-layout">
+
+            <!-- بطاقة الحالة الحالية -->
+            <div class="panel status-panel">
+              <div class="panel-header">
+                <h3 class="panel-title">حالة الخدمة الآن</h3>
+              </div>
+              <div class="status-display" id="status-display">
+                <div class="status-circle" id="status-circle">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="status-icon">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </div>
+                <div class="status-info">
+                  <div class="status-big-label" id="status-big-label">جاري التحقق...</div>
+                  <div class="status-time-now" id="status-time-now"></div>
+                </div>
+              </div>
+              <div class="schedule-summary" id="schedule-summary"></div>
+            </div>
+
+            <!-- إعدادات الوقت -->
+            <div class="panel">
+              <div class="panel-header">
+                <h3 class="panel-title">إعدادات أوقات العمل</h3>
+                <div class="toggle-switch-wrap">
+                  <span>تفعيل أوقات العمل</span>
+                  <label class="toggle-switch" id="schedule-toggle-label">
+                    <input type="checkbox" id="schedule-enabled" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="schedule-form" id="schedule-form">
+                <div class="time-row">
+                  <div class="time-field">
+                    <label for="time-from">وقت البدء</label>
+                    <input type="time" id="time-from" value="08:00" />
+                  </div>
+                  <div class="time-separator">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"/>
+                      <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                  </div>
+                  <div class="time-field">
+                    <label for="time-to">وقت الانتهاء</label>
+                    <input type="time" id="time-to" value="17:00" />
+                  </div>
+                </div>
+
+                <div class="days-section">
+                  <label class="days-label">أيام العمل</label>
+                  <div class="days-grid">
+                    <label class="day-chip"><input type="checkbox" name="day" value="0" id="day-sun" /><span>الأحد</span></label>
+                    <label class="day-chip"><input type="checkbox" name="day" value="1" id="day-mon" /><span>الاثنين</span></label>
+                    <label class="day-chip"><input type="checkbox" name="day" value="2" id="day-tue" /><span>الثلاثاء</span></label>
+                    <label class="day-chip"><input type="checkbox" name="day" value="3" id="day-wed" /><span>الأربعاء</span></label>
+                    <label class="day-chip"><input type="checkbox" name="day" value="4" id="day-thu" /><span>الخميس</span></label>
+                    <label class="day-chip"><input type="checkbox" name="day" value="5" id="day-fri" /><span>الجمعة</span></label>
+                    <label class="day-chip"><input type="checkbox" name="day" value="6" id="day-sat" /><span>السبت</span></label>
+                  </div>
+                </div>
+
+                <div class="custom-msg-field">
+                  <label for="custom-msg">رسالة خارج وقت العمل (اختياري)</label>
+                  <textarea id="custom-msg" rows="2" placeholder="مثال: الخدمة متاحة من الأحد إلى الخميس من 8 صباحاً حتى 5 مساءً"></textarea>
+                </div>
+
+                <button class="save-schedule-btn" id="save-schedule-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                    <polyline points="17 21 17 13 7 13 7 21"/>
+                    <polyline points="7 3 7 8 15 8"/>
+                  </svg>
+                  حفظ الإعدادات
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ===== قسم الإعدادات ===== -->
+        <section class="section" id="section-settings">
+          <div class="panel" style="max-width:500px">
+            <div class="panel-header">
+              <h3 class="panel-title">إعدادات النظام</h3>
+            </div>
+            <div class="settings-form">
+              <div class="settings-field">
+                <label for="new-pass">تغيير كلمة المرور</label>
+                <input type="password" id="new-pass" placeholder="كلمة المرور الجديدة" />
+              </div>
+              <div class="settings-field">
+                <label for="confirm-pass">تأكيد كلمة المرور</label>
+                <input type="password" id="confirm-pass" placeholder="تأكيد كلمة المرور الجديدة" />
+              </div>
+              <p class="settings-msg" id="settings-msg"></p>
+              <button class="save-pass-btn" id="save-pass-btn">حفظ كلمة المرور</button>
+
+              <div class="divider"></div>
+
+              <div class="danger-zone">
+                <h4>منطقة الخطر</h4>
+                <button class="btn-danger full" id="reset-data-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                  </svg>
+                  حذف جميع البيانات وإعادة الضبط
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة التأكيد -->
+  <div class="confirm-overlay" id="confirm-overlay">
+    <div class="confirm-box">
+      <div class="confirm-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+      <h3 id="confirm-title">تأكيد الحذف</h3>
+      <p id="confirm-msg">هل أنت متأكد؟ لا يمكن التراجع عن هذا الإجراء.</p>
+      <div class="confirm-btns">
+        <button class="confirm-cancel" id="confirm-cancel">إلغاء</button>
+        <button class="confirm-ok btn-danger" id="confirm-ok">تأكيد</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- إشعار النجاح -->
+  <div class="toast" id="toast"></div>
+
+  <script src="config.js"></script><script src="admin.js"></script>
+</body>
+</html>

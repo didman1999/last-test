@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>حجز رقم شركات المقاولات</title>
+  <meta name="description" content="منصة حجز أرقام شركات المقاولات - قم بإدخال بياناتك لحجز رقم لشركتك بسهولة وأمان" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- خلفية الموقع -->
+  <div class="bg-scene">
+    <div class="bg-overlay"></div>
+  </div>
+
+  <!-- المحتوى الرئيسي -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- الأيقونة والعنوان -->
+      <div class="hero-header">
+        <div class="logo-wrapper">
+          <div class="logo-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+              <path d="M14 38 C14 22 26 12 40 12 C54 12 66 22 66 38 L66 44 L14 44 Z" stroke="#1a6fc4" stroke-width="3"
+                fill="rgba(26,111,196,0.08)" stroke-linejoin="round" />
+              <path d="M8 44 L72 44 L72 50 Q72 56 66 56 L14 56 Q8 56 8 50 Z" stroke="#1a6fc4" stroke-width="3"
+                fill="rgba(26,111,196,0.08)" stroke-linejoin="round" />
+              <rect x="24" y="52" width="32" height="20" rx="4" fill="#1a6fc4" />
+              <text x="40" y="66" text-anchor="middle" font-size="13" font-weight="bold" fill="white"
+                font-family="Cairo, sans-serif">#</text>
+            </svg>
+          </div>
+        </div>
+        <h1 class="main-title">حجز رقم شركات المقاولات</h1>
+        <p class="main-subtitle">قم بإدخال بياناتك لحجز رقم لشركتك</p>
+      </div>
+
+      <!-- البطاقة الرئيسية -->
+      <div class="card" id="booking-card">
+
+        <!-- بانر خارج وقت العمل -->
+        <div class="closed-banner" id="closed-banner" style="display:none">
+          <div class="closed-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          </div>
+          <div class="closed-text">
+            <strong>الخدمة غير متاحة الآن</strong>
+            <p id="closed-message">الخدمة متاحة خلال أوقات العمل المحددة فقط</p>
+          </div>
+        </div>
+
+        <form id="booking-form" novalidate style="display:flex; flex-direction:column; gap:0">
+
+          <!-- الاسم -->
+          <div class="form-group" id="group-company">
+            <label class="form-label" for="company-name">
+              الاسم
+              <span class="required-star">*</span>
+            </label>
+            <div class="input-wrapper">
+              <input type="text" id="company-name" name="companyName" class="form-input" placeholder="أدخل الاسم"
+                autocomplete="name" required />
+              <span class="input-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </span>
+            </div>
+            <span class="error-msg" id="err-company">يرجى إدخال الاسم</span>
+          </div>
+
+          <!-- رقم الهاتف -->
+          <div class="form-group" id="group-phone">
+            <label class="form-label" for="phone-number">
+              رقم الهاتف
+              <span class="required-star">*</span>
+            </label>
+            <div class="input-wrapper">
+              <input type="tel" id="phone-number" name="phoneNumber" class="form-input" placeholder="أدخل رقم الهاتف"
+                autocomplete="tel" required />
+              <span class="input-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.59 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </span>
+            </div>
+            <span class="error-msg" id="err-phone">يرجى إدخال رقم هاتف صحيح</span>
+          </div>
+
+          <!-- الرقم القومي -->
+          <div class="form-group" id="group-national-id">
+            <label class="form-label" for="national-id">
+              الرقم القومي
+              <span class="required-star">*</span>
+            </label>
+            <div class="input-wrapper">
+              <input type="text" id="national-id" name="nationalId" class="form-input"
+                placeholder="أدخل الرقم القومي" maxlength="14" required />
+              <span class="input-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="5" width="20" height="14" rx="2" />
+                  <line x1="2" y1="10" x2="22" y2="10" />
+                  <line x1="6" y1="15" x2="10" y2="15" />
+                  <line x1="13" y1="15" x2="17" y2="15" />
+                </svg>
+              </span>
+            </div>
+            <span class="error-msg" id="err-national-id">يرجى إدخال الرقم القومي (14 رقم)</span>
+          </div>
+
+          <!-- زر الحجز -->
+          <button type="submit" class="submit-btn" id="submit-btn">
+            <span class="btn-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="9" x2="20" y2="9" />
+                <line x1="4" y1="15" x2="20" y2="15" />
+                <line x1="10" y1="3" x2="8" y2="21" />
+                <line x1="16" y1="3" x2="14" y2="21" />
+              </svg>
+            </span>
+            <span class="btn-text">حجز رقم</span>
+            <span class="btn-loader" id="btn-loader">
+              <span class="spinner"></span>
+            </span>
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- نافذة النجاح -->
+  <div class="success-overlay" id="success-overlay">
+    <div class="success-modal">
+      <div class="success-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
+      <h2 class="success-title">تم الحجز بنجاح!</h2>
+      <p class="success-text">تم تسجيل بيانات شركتك بنجاح.<br />سيتم التواصل معك قريباً على رقم الهاتف المسجل.</p>
+      <div class="success-number">
+        <span class="success-number-label">رقم الحجز الخاص بك</span>
+        <span class="success-number-value" id="booking-number-value">#00001</span>
+      </div>
+      <button class="success-btn" id="success-close-btn">حسناً، شكراً!</button>
+    </div>
+  </div>
+
+  <script src="config.js"></script><script src="app.js"></script>
+</body>
+
+</html>
